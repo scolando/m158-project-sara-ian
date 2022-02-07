@@ -26,18 +26,34 @@ NHANES %>%
 ```
 
 
-Varibales we're using:
+We are using data from the National Health and Nutrition Exam Survey (NHANES) database that was collected between 2009-2012 with adjusted weighing.
+
+
+There are 75 total variables, however only 10 are relevant to our project.
+
+**Variables we're using**:
+
 Age (quantitative)
+
 Income (numerical discrete?)
+
 Testosterone (quantitative)
+
 Physactivedays (numerical discrete)
+
 Pulse (quantitative)
 
 Gender (categorical)
+
 SleepTrouble (categorical) 
+
 Depressed (categorical)
+
 Education (categorical)
+
 Work (categorical)
+
+The target population of NHANES is "the non-institutionalized civilian resident population of the United States". Therefore, the observational unit is a civilian resident of the United States (of any age).
 
 ```{r}
 OurData <- NHANES %>% select(Age, HHIncome, Testosterone, PhysActiveDays, 
@@ -48,12 +64,19 @@ dim(OurData)
 
 ```
 
+```{r}
+OurData %>%
+  glimpse()
+```
+
+
 ```{r eval = FALSE}
 
 skim(OurData)
 
 ```
 
+**Graphs**
 
 ```{r}
 OurData %>%
@@ -114,13 +137,7 @@ OurData %>%
   ggplot(aes(x = HHIncome)) + # which column are the residuals?
   geom_bar()  # nothing to do here, but remember this function for later!
 ```
-Change
-We are using data from the National Health and Nutrition Exam Survey (NHANES) database that was collected between 2009-2012 with adjusted weighing.
 
 
-
-There are 75 total variables, however only 10 are relevant to our project.
-
-The target population of NHANES is "the non-institutionalized civilian resident population of the United States". Therefore, the observational unit is a civilian resident of the United States (of any age).
 
 
