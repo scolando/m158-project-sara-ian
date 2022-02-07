@@ -114,7 +114,7 @@ OurData %>%
   ggplot(aes(x = HHIncome)) + # which column are the residuals?
   geom_bar()  # nothing to do here, but remember this function for later!
 ```
-
+Change
 We are using data from the National Health and Nutrition Exam Survey (NHANES) database that was collected between 2009-2012 with adjusted weighing.
 
 
