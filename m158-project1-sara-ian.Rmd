@@ -18,42 +18,54 @@ library(nhanesA)
 library(skimr)
 ```
 
-## R Markdown
-
-```{r NHANES DATA}
+```{r eval = FALSE}
 NHANES %>%
   glimpse()
 ```
 
+**NHANES Data Description:**
 
 We are using data from the National Health and Nutrition Exam Survey (NHANES) database that was collected between 2009-2012 with adjusted weighing.
 
 
-There are 75 total variables, however only 10 are relevant to our project.
-
-**Variables we're using**:
-
-Age (quantitative)
-
-Income (numerical discrete?)
-
-Testosterone (quantitative)
-
-Physactivedays (numerical discrete)
-
-Pulse (quantitative)
-
-Gender (categorical)
-
-SleepTrouble (categorical) 
-
-Depressed (categorical)
-
-Education (categorical)
-
-Work (categorical)
-
 The target population of NHANES is "the non-institutionalized civilian resident population of the United States". Therefore, the observational unit is a civilian resident of the United States (of any age).
+
+
+There are 75 total variables in NHANES data. However, only 10 are relevant to our project.
+
+**Relevant Variables:**
+
+*Age (quantitative)*
+- Age in years at screening of study participant. All subjects 80 and older were recorded as 80.
+
+*Testosterone (quantitative)*
+- Testerone total (ng/dL), recorded for patients 6 and older. Note that no testosterone data for 2009-2010 was recorded.
+
+*Physactivedays (numerical discrete)*
+- Number of days in a typical week that partipant does moderate or vigorous-intensity activity. Reported in patients 12 years or older.
+
+*Pulse (quantitative)*
+- 60 second pulse rate
+
+*Gender (categorical)*
+- Gender (sex) of study particpant coded as "male" or "female".
+
+*SleepTrouble (categorical)* 
+- Paritipant has told a doctor or other health professional that they had trouble sleeping. Reported in patients 16 and older. Either "yes" or "no".
+
+*Depressed (categorical)*
+- Self reported number of days where participant felt down, depressed or hopeless. Reported in patients 18 and olders with categories of "none", "several", "majority (more than half the days)", or "almostall".
+
+*Education (categorical)*
+- Educational level of study participant. Reported for ages 20 or older. Categories to choose from are "8thgrade", "9-11thgrade", "Highschool", "SomeCollege", or "CollegeGrad".
+
+*Work (categorical)*
+- Categorizes whether study participant is "working", "not working" or no data was collected.
+
+*HHIncome (categorical)*
+- Total annual gross income for the household in US dollars. Variable was partitioned into blocks with the smallest one being (0,4999) and the largest block being (100,000 or more).
+
+**Filtering NHANES for to contain only our relevant variables:**
 
 ```{r}
 OurData <- NHANES %>% select(Age, HHIncome, Testosterone, PhysActiveDays, 
@@ -64,7 +76,7 @@ dim(OurData)
 
 ```
 
-```{r}
+```{r eval = FALSE}
 OurData %>%
   glimpse()
 ```
@@ -78,66 +90,81 @@ skim(OurData)
 
 **Graphs**
 
-```{r}
+```{r fig.cap = "here is the caption"}
 OurData %>%
   ggplot(aes(x = Pulse)) + # which column are the residuals?
   geom_histogram()  # nothing to do here, but remember this function for later!
 ```
 
-```{r}
+```{r fig.cap = "here is the caption"}
 OurData %>%
   ggplot(aes(x = Testosterone)) + # which column are the residuals?
   geom_histogram()  # nothing to do here, but remember this function for later!
 ```
 
-```{r}
+Skew right,____...
+
+```{r fig.cap = "here is the caption"}
 OurData %>%
   ggplot(aes(x = PhysActiveDays)) + # which column are the residuals?
   geom_histogram()  # nothing to do here, but remember this function for later!
 ```
 
-```{r}
+```{r fig.cap = "here is the caption"}
 OurData %>%
   ggplot(aes(x = Age)) + # which column are the residuals?
   geom_histogram()  # nothing to do here, but remember this function for later!
 ```
 
-```{r}
+```{r fig.cap = "here is the caption"}
 OurData %>%
   ggplot(aes(x = Gender)) + # which column are the residuals?
   geom_bar()  # nothing to do here, but remember this function for later!
 ```
 
-```{r}
+```{r fig.cap = "here is the caption"}
 OurData %>%
   ggplot(aes(x = SleepTrouble)) + # which column are the residuals?
   geom_bar()  # nothing to do here, but remember this function for later!
 ```
 
-```{r}
+```{r fig.cap = "here is the caption"}
 OurData %>%
   ggplot(aes(x = Depressed)) + # which column are the residuals?
   geom_bar()  # nothing to do here, but remember this function for later!
 ```
 
-```{r}
+```{r fig.cap = "here is the caption"}
 OurData %>%
   ggplot(aes(x = Education)) + # which column are the residuals?
   geom_bar()  # nothing to do here, but remember this function for later!
 ```
 
-```{r}
+```{r fig.cap = "here is the caption"}
 OurData %>%
   ggplot(aes(x = Work)) + # which column are the residuals?
   geom_bar()  # nothing to do here, but remember this function for later!
 ```
 
-```{r}
+```{r fig.cap = "here is the caption"}
 OurData %>%
   ggplot(aes(x = HHIncome)) + # which column are the residuals?
   geom_bar()  # nothing to do here, but remember this function for later!
 ```
 
 
+A comment on anything of interest that occurred in doing the project. Were the data approximately what you expected or did some of the results surprise you? How did the sampling
+go? Do you think you got a representative sample of your population?
+
+**Because we will be doing hypothesis testing as the next step, you need to indicate what
+population your data describes. If it is a census, then maybe it is representative of an even
+larger population? (For example, a census of state information from 2015 might be somewhat
+representative of 2016? Is it?) Also, discuss the limitations of describing a larger population**
+
+The NHANES data represents a sample from the population of resident citizens of the US (who are 2 months or older). The specific NHANES data we are using was collection for 2009-2010 and 2011-2012. These results were voluntary and primarily collected via interview and physical examinations. There are some limitations of describing the larger population using NHANES data: 
+
+Firstly, many of our relevant variables were only collected within adults. Therefore, there are limitations to how we could apply our sample data to the population of all resident citizens of the US (who are 2 months or older) because we do not have certain variable data collected for non-adults. 
+
+Additionally, NHANES was voluntary and primarily self-reported or collected by healthcare professionals. Therefore, it is likely that people who feel sicker were overrepresented in our sample. Additionally, it is likely that people who have health insurance (or can afford wellness check-ups etc.) are also overrepresented in our sample. 
 
 
