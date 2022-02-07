@@ -148,13 +148,22 @@ OurData %>%
 
 ```{r fig.cap = "here is the caption"}
 OurData %>%
-  ggplot(aes(x = HHIncome)) + # which column are the residuals?
-  geom_bar()  # nothing to do here, but remember this function for later!
+  ggplot(aes(x = HHIncome)) + 
+  geom_bar()
 ```
 
+```{r fig.height=4, fig.width=5, fig.align='center'}
+glimpse(OurData)
+ggplot(OurData, aes(x= Testosterone, y = SleepTrouble)) + geom_boxplot()
+```  
 
-A comment on anything of interest that occurred in doing the project. Were the data approximately what you expected or did some of the results surprise you? How did the sampling
-go? Do you think you got a representative sample of your population?
+```{r fig.height=2, fig.width=3, fig.align='center'}
+glimpse(OurData)
+ggplot(OurData, aes(x= HHIncome, y = Pulse)) + geom_boxplot()
+```  
+
+**A comment on anything of interest that occurred in doing the project. Were the data approximately what you expected or did some of the results surprise you? How did the sampling
+go? Do you think you got a representative sample of your population?**
 
 **Because we will be doing hypothesis testing as the next step, you need to indicate what
 population your data describes. If it is a census, then maybe it is representative of an even
