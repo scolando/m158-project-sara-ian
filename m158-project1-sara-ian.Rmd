@@ -113,6 +113,7 @@ OurData %>%
   ggplot(aes(x = Pulse)) +
   geom_histogram()
 ```
+Distribution of Pulse is approximately unimodal symmetric and bell-shaped.
 
 ```{r fig.cap = "Frequency Distribution for Testosterone Levels (ng/ml)", echo=FALSE}
 OurData %>%
@@ -120,13 +121,14 @@ OurData %>%
   geom_histogram() 
 ```
 
-Skew right,____...
+Distribution of Testosterone Levels are skew right with the mode being at 0. 
 
 ```{r fig.cap = "Frequency Distribution for Physically Active Days (per week)", echo=FALSE}
 OurData %>%
   ggplot(aes(x = PhysActiveDays)) + 
   geom_histogram(binwidth=1)
 ```
+The distribution of Physically Active Days is unimodal at approximately 3 days. The data is roughly symmetric but has another peak around 7 days.
 
 ```{r fig.cap = "here is the caption", eval=FALSE, echo=FALSE}
 OurData %>%
@@ -145,6 +147,7 @@ OurData %>%
   ggplot(aes(x = SleepTrouble)) + 
   geom_bar()
 ```
+Most common response was "No" with a large percentage of data being N/A (meaning no response).
 
 ```{r fig.cap = "Frequency of Depression (based on proportion of days/week)", echo=FALSE}
 OurData %>%
@@ -163,24 +166,28 @@ OurData %>%
   ggplot(aes(x = Work)) + 
   geom_bar()
 ```
-
+The most common response was "Working" and there was also a large percentage of N/A results, where data was not recorded.
 
 ```{r fig.cap = "Frequency of Household Income Salaries", echo=FALSE}
 OurData %>%
   ggplot(aes(x = HHIncomeMid)) +
   geom_histogram(binwidth = 15000, bins = 12)
 ```
-
+The distribution of Household Income (middle) looks slightly skew left with the mode being 100,000k+. However, median and mean look to be centered around 50-60,000 US dollars.
 
 ```{r fig.height=4, fig.width=5, fig.align='center', fig.cap = "Box Plot of Testosterone Levels (ng/ml) vs. Sleep Troubles", echo=FALSE}
 glimpse(OurData)
 ggplot(OurData, aes(x= Testosterone, y = SleepTrouble)) + geom_boxplot()
-```  
+```
+The median testosterone levels were higher for those who answered "No" sleep troubles than for those who answered "Yes" sleep troubles. However, the interquartile range testosterone level for "Yes" and "No" sleep troubles looked approximately equal. This shows that there may be a possible relationship between Testosterone levels and Sleep Troubles. 
 
 ```{r fig.height=4, fig.width=5, fig.align='center', fig.cap = "Box Plot of (60 second) Pulse vs. Work", echo=FALSE}
 glimpse(OurData)
 ggplot(OurData, aes(x= Pulse, y = Work)) + geom_boxplot()
-```  
+```
+The Median pulse for Working and Not Working look approximately equal whereas the average pulse for "Looking" for work looks slightly higher. On the other hand, the interquartile range for NotWorking and Looking are about the same whereas the interquartile range for "working" is smaller. This shows that possibly working status and pulse have a relationship between each other.
+
+There are also many outliers in all three categories of working status according to the box plot.
 
 
 # Additional Information
