@@ -91,7 +91,7 @@ skim(OurData)
 
 # Summary Statistics
 
-```{r fig.cap = "Summary Statistics", echo=FALSE}
+```{r tab.cap = "Summary Statistics", tab_header, echo=FALSE}
 skim(OurData) %>%
   dplyr::select(skim_variable, numeric.mean, numeric.sd, complete_rate, numeric.p50)
 
@@ -155,7 +155,7 @@ OurData %>%
   geom_bar()
 ```
 
-```{r fig.cap = "Frequency for Proprotion of Education Completed", echo=FALSE}
+```{r fig.cap = "Frequency for Proportion of Education Completed", echo=FALSE}
 OurData %>%
   ggplot(aes(x = Education)) + 
   geom_bar()  
@@ -194,6 +194,10 @@ There are also many outliers in all three categories of working status according
 
 **A comment on anything of interest that occurred in doing the project. Were the data approximately what you expected or did some of the results surprise you? How did the sampling
 go? Do you think you got a representative sample of your population?**
+
+We were surprised by the amount of N/A data for some variables -- especially for those that seemed basic to complete (such as working status).
+
+The data
 
 **Because we will be doing hypothesis testing as the next step, you need to indicate what
 population your data describes. If it is a census, then maybe it is representative of an even
