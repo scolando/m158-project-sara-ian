@@ -71,19 +71,6 @@ skim(OurData) %>%
 ```
 
 # Graphs
-
-```{r, fig.width=3,fig.height=2}
-OurData %>%
-  ggplot(aes(x = Pulse)) + 
-  geom_histogram()  
-```
-
-```{r, fig.width=3,fig.height=2}
-OurData %>%
-  ggplot(aes(x = Testosterone)) + 
-  geom_histogram() 
-```
-
 ```{r, fig.width=3,fig.height=2}
 OurData %>%
   ggplot(aes(x = PhysActiveDays)) + 
@@ -92,38 +79,8 @@ OurData %>%
 
 ```{r, fig.width=3,fig.height=2}
 OurData %>%
-  ggplot(aes(x = Age)) + 
-  geom_histogram() 
-```
-
-```{r, fig.width=3,fig.height=2}
-OurData %>%
-  ggplot(aes(x = Gender)) + 
-  geom_bar() 
-```
-
-```{r, fig.width=3,fig.height=2}
-OurData %>%
-  ggplot(aes(x = SleepTrouble)) + 
-  geom_bar()  
-```
-
-```{r, fig.width=3,fig.height=2}
-OurData %>%
   ggplot(aes(x = Depressed)) + 
   geom_bar() 
-```
-
-```{r, fig.width=3,fig.height=2}
-OurData %>%
-  ggplot(aes(x = Education)) + 
-  geom_bar()  
-```
-
-```{r, fig.width=3,fig.height=2}
-OurData %>%
-  ggplot(aes(x = Work)) + 
-  geom_bar()  
 ```
 
 ```{r, fig.width=3,fig.height=2}
