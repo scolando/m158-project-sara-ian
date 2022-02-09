@@ -1,7 +1,6 @@
 ---
 title: "m158-project1-NHANES"
 author: "Ian Horsburgh and Sara Colando"
-date: "due Tuesday, Feb 8, 2022"
 output: pdf_document
 ---
 
@@ -27,13 +26,7 @@ NHANES %>%
 
 **NHANES Data Description:**
 
-We are using data from the National Health and Nutrition Exam Survey (NHANES) database that was collected between 2009-2012 with adjusted weighing.
-
-
-The target population of NHANES is "the non-institutionalized civilian resident population of the United States". Therefore, the observational unit is a civilian resident of the United States (of any age).
-
-
-There are 75 total variables in NHANES data. However, only 10 are relevant to our project.
+We are using data from the National Health and Nutrition Exam Survey (NHANES) database that was collected between 2009-2012 with adjusted weighing. The target population of NHANES is "the non-institutionalized civilian resident population of the United States". Therefore, the observational unit is a civilian resident of the United States (of any age).
 
 **Relevant Variables:**
 
@@ -67,16 +60,13 @@ There are 75 total variables in NHANES data. However, only 10 are relevant to ou
 *Work (categorical)*
 - Categorizes whether study participant is "working", "not working" or no data was collected.
 
-**Filtering NHANES for to contain only our relevant variables:**
-
 ```{r echo=FALSE}
 OurData <- NHANES %>% select(Age, HHIncomeMid, Testosterone, PhysActiveDays, 
                                  Pulse, Gender, SleepTrouble, Depressed, 
                                  Education, Work)
-names(OurData)
 ```
 
-```{r eval=FALSE, echo= FALSE}
+```{r eval=FALSE, echo=FALSE}
 OurData %>%
   glimpse()
 ```
@@ -97,112 +87,110 @@ skim(OurData) %>%
 
 ```
 
-We can see that our data has varying rates of completion with most being over 50% reported, but Testosterone and PhysActiveDays have 41.25% and 46.6% completion rates respectively. As such, it is likely that our statistics for Testorsterone and PhysActievDays are not fully representative of the population.
+We can see that our data has varying rates of completion with most being over 50% reported, but Testosterone and PhysActiveDays have 41.25% and 46.6% completion rates respectively. As such, it is likely that our statistics for Testorsterone and PhysActiveDays are not fully representative of the population.
 
 Additionally, Testosterone has a extremely high standard deviation (SD) relative to its mean, indicating the data distribution may be skewed. This is corroborated by the mean and median (p.50) being substantially different for Testosterone, and so we expect the distribution to be skew right.
 
 For all the other variables, median (p.50) and mean seems relatively close indicating the data distribution is somewhat symmetrical. However, to confirm this fact, we will have to look at histograms and bar graphs to see if there is a skewness to the data distribution. 
 
-Each standard deviation (SD) also tells us a little more information about the shape of the data. For example, for age the SD is relatively high but the measures of center are about the same. So, we would expect age to have a more uniform distribution. HHincomeMid seems to have a high SD relative to its center, so we would expect a slightly skewed data distribution even though the mean and median seem relatively close.
-
 # Graphs
 
 
-```{r fig.cap = "Frequency Distribution of (60-sec) Pulse", echo=FALSE}
+```{r fig.height=2, fig.width=3, fig.cap = "Frequency Distribution of (60-sec) Pulse", echo=FALSE}
 OurData %>%
   ggplot(aes(x = Pulse)) +
   geom_histogram()
 ```
-Distribution of Pulse is approximately unimodal symmetric and bell-shaped.
 
-```{r fig.cap = "Frequency Distribution for Testosterone Levels (ng/ml)", echo=FALSE}
+```{r fig.height=2, fig.width=3, fig.cap = "Frequency Distribution for Testosterone Levels (ng/ml)", echo=FALSE}
 OurData %>%
   ggplot(aes(x = Testosterone)) + 
-  geom_histogram() 
+  geom_histogram()
 ```
 
-Distribution of Testosterone Levels are skew right with the mode being at 0. 
+```{r fig.height=2, fig.width=3, fig.cap = "Frequency Distribution for Physically Active Days (per week)\newline The distribution of Physically Active Days is unimodal at approximately 3 days. The data is roughly symmetric but has another peak around 7 days.", eval=FALSE, echo=FALSE}
 
-```{r fig.cap = "Frequency Distribution for Physically Active Days (per week)", echo=FALSE}
 OurData %>%
   ggplot(aes(x = PhysActiveDays)) + 
   geom_histogram(binwidth=1)
 ```
-The distribution of Physically Active Days is unimodal at approximately 3 days. The data is roughly symmetric but has another peak around 7 days.
 
-```{r fig.cap = "here is the caption", eval=FALSE, echo=FALSE}
+```{r fig.height=2, fig.width=3, fig.cap = "Frequency of Age", echo=FALSE}
 OurData %>%
   ggplot(aes(x = Age)) +
   geom_histogram()  
 ```
 
-```{r fig.cap = "Frequency of Males vs. Females", eval=FALSE, echo=FALSE}
+```{r fig.height=2, fig.width=3, fig.cap = "Frequency of Males vs. Females", eval=FALSE, echo=FALSE}
 OurData %>%
   ggplot(aes(x = Gender)) + 
   geom_bar() 
 ```
 
-```{r fig.cap = "Frequency of if Sleep Trouble reported to Medical Staff", echo=FALSE}
+```{r fig.height23, fig.width=3, fig.cap = "Counts for Sleep Trouble reported to Medical Staff", eval=FALSE, echo=FALSE}
 OurData %>%
   ggplot(aes(x = SleepTrouble)) + 
   geom_bar()
 ```
-Most common response was "No" with a large percentage of data being N/A (meaning no response).
 
-```{r fig.cap = "Frequency of Depression (based on proportion of days/week)", echo=FALSE}
+```{r fig.height=2, fig.width=3, fig.cap = "Frequency of Depression (based on proportion of days/week)", echo=FALSE}
 OurData %>%
   ggplot(aes(x = Depressed)) + 
   geom_bar()
 ```
 
-```{r fig.cap = "Frequency for Proportion of Education Completed", echo=FALSE}
+```{r fig.height=2, fig.width=3, fig.cap = "Frequency for Proportion of Education Completed", eval=FALSE, echo=FALSE}
 OurData %>%
   ggplot(aes(x = Education)) + 
   geom_bar()  
 ```
 
-```{r fig.cap = "Frequency of Current Work Status", echo=FALSE}
+```{r fig.height=2, fig.width=3, fig.cap= "Frequency of Current Work Status", eval = FALSE, echo=FALSE}
 OurData %>%
   ggplot(aes(x = Work)) + 
   geom_bar()
 ```
-The most common response was "Working" and there was also a large percentage of N/A results, where data was not recorded.
 
-```{r fig.cap = "Frequency of Household Income Salaries", echo=FALSE}
+```{r fig.height=2, fig.width=3, fig.cap = "Frequency of Household Income Salaries", echo=FALSE}
 OurData %>%
   ggplot(aes(x = HHIncomeMid)) +
   geom_histogram(binwidth = 15000, bins = 12)
-```
-The distribution of Household Income (middle) looks slightly skew left with the mode being 100,000k+. However, median and mean look to be centered around 50-60,000 US dollars.
 
-```{r fig.height=4, fig.width=5, fig.align='center', fig.cap = "Box Plot of Testosterone Levels (ng/ml) vs. Sleep Troubles", echo=FALSE}
-glimpse(OurData)
+```
+
+```{r fig.height=3, fig.width=4, fig.align='center', fig.cap = "Box Plot of Testosterone Levels (ng/ml) vs. Sleep Troubles", echo=FALSE}
 ggplot(OurData, aes(x= Testosterone, y = SleepTrouble)) + geom_boxplot()
 ```
-The median testosterone levels were higher for those who answered "No" sleep troubles than for those who answered "Yes" sleep troubles. However, the interquartile range testosterone level for "Yes" and "No" sleep troubles looked approximately equal. This shows that there may be a possible relationship between Testosterone levels and Sleep Troubles. 
+ 
 
-```{r fig.height=4, fig.width=5, fig.align='center', fig.cap = "Box Plot of (60 second) Pulse vs. Work", echo=FALSE}
-glimpse(OurData)
+```{r fig.height=3, fig.width=4, fig.align='center', fig.cap = "Box Plot of (60 second) Pulse vs. Work", echo=FALSE}
 ggplot(OurData, aes(x= Pulse, y = Work)) + geom_boxplot()
 ```
-The Median pulse for Working and Not Working look approximately equal whereas the average pulse for "Looking" for work looks slightly higher. On the other hand, the interquartile range for NotWorking and Looking are about the same whereas the interquartile range for "working" is smaller. This shows that possibly working status and pulse have a relationship between each other.
 
-There are also many outliers in all three categories of working status according to the box plot.
+# Commentary on Graphs
 
+The distribution of Pulse is approximately unimodal symmetric and bell-shaped.
+
+The distribution of testosterone Levels is skew right with the mode being at 0.
+
+Data distribution is relatively uniform wth a slight peak around 30-40 years old and othrs at the edges (10 and younger as well as 80 and above.
+
+The most common response was none with also a high proportion of N/A"
+
+The distribution of Household Income (middle) looks slightly skew left with the mode being 100,000k+. However, median and mean look to be centered around 50-60,000 US dollars.
+
+The median testosterone levels were higher for those who answered No sleep troubles than for those who answered Yes sleep troubles. However, the interquartile range testosterone level for Yes and No sleep troubles looked approximately equal. This shows that there may be a possible relationship between Testosterone levels and Sleep Troubles.
+
+The Median pulse for Working and Not Working look approximately equal whereas the average pulse for Looking for work looks slightly higher. On the other hand, the interquartile range for NotWorking and Looking are about the same whereas the interquartile range for working is smaller. This shows that possibly working status and pulse have a relationship between each other.
 
 # Additional Information
 
-**A comment on anything of interest that occurred in doing the project. Were the data approximately what you expected or did some of the results surprise you? How did the sampling
-go? Do you think you got a representative sample of your population?**
+We were surprised by the amount of N/A data for some variables -- especially for those that seemed like general information (such as working status or education).
 
-We were surprised by the amount of N/A data for some variables -- especially for those that seemed basic to complete (such as working status).
+The data in the sample was about what we expected -- though it was a little surprising to see an uptick in people 80 (or older) in our sample. However, upon reflection, this would make sense, as 80+ adults are probably more likely to come to the doctors office and complete the NHANES survey. 
 
-The data
+Given the number of observations and the relatively high completion rate for most categories, we do think the sampling data is representative of our population (i.e. US citizens). It will be interesting to see though if the high completion is true for all ages -- or just certain age subsets of US citizens.
 
-**Because we will be doing hypothesis testing as the next step, you need to indicate what
-population your data describes. If it is a census, then maybe it is representative of an even
-larger population? (For example, a census of state information from 2015 might be somewhat
-representative of 2016? Is it?) Also, discuss the limitations of describing a larger population**
 
 The NHANES data represents a sample from the population of resident citizens of the US (who are 2 months or older). The specific NHANES data we are using was collection for 2009-2010 and 2011-2012. These results were voluntary and primarily collected via interview and physical examinations. There are some limitations of describing the larger population using NHANES data: 
 
