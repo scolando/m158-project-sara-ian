@@ -94,7 +94,7 @@ ggplot(OurData, aes(x= Testosterone, y = SleepTrouble)) + geom_boxplot()
 ```  
 
 ```{r fig.height=2, fig.width=3, fig.align='center'}
-ggplot(OurData, aes(x= HHIncomeMid, y = Pulse)) + geom_boxplot()
+ggplot(OurData, aes(x= Work, y = Pulse)) + geom_boxplot()
 ```  
 
 # Additional Information
