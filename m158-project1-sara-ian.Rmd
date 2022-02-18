@@ -18,6 +18,18 @@ library(nhanesA)
 library(skimr)
 ```
 
+# Reponse Variable
+
+Our response variable is going to be pulse which is a quantitative variable. 
+
+# SLR
+
+pulse versus income
+
+# Hypothesis
+
+null: $\beta_1$ = 0 
+
 # NHANES Data Description:
 
 We are using data from the National Health and Nutrition Exam Survey (NHANES) database that was collected between 2009-2012 with adjusted weighing.
@@ -96,6 +108,31 @@ ggplot(OurData, aes(x= Testosterone, y = SleepTrouble)) + geom_boxplot()
 ```{r fig.height=2, fig.width=3, fig.align='center'}
 ggplot(OurData, aes(x= Work, y = Pulse)) + geom_boxplot()
 ```  
+
+```{r}
+ OurData %>%
+  lm(Pulse ~ Testosterone, data = .) %>%
+  ggplot(aes(x=Testosterone, y=Pulse)) + geom_point() + geom_smooth(method= "lm", se= FALSE) 
+```
+```{r}
+testosterone_new <-OurData %>%
+  filter(Testosterone %in% (1:1400))
+```
+
+```{r}
+ testosterone_new %>%
+  lm(Pulse ~ Testosterone, data = .) %>%
+  ggplot(aes(x=Testosterone, y=Pulse)) + geom_point() + geom_smooth(method= "lm", se= FALSE) 
+```
+```{r}
+ testosterone_new %>%
+  lm(Pulse ~ Testosterone, data = .) %>%
+  augment() %>%
+  ggplot(aes(x = .fitted, y = .resid)) + 
+  geom_point() + 
+  geom_hline(yintercept = 0)
+```
+
 
 # Additional Information
 **A comment on anything of interest that occurred in doing the project. Were the data approximately what you expected or did some of the results surprise you? How did the sampling
