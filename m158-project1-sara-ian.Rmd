@@ -24,7 +24,7 @@ Our response variable is going to be pulse which is a quantitative variable.
 
 # SLR
 
-pulse versus income
+pulse versus testosterone
 
 # Hypothesis
 
@@ -133,6 +133,11 @@ testosterone_new <-OurData %>%
   geom_hline(yintercept = 0)
 ```
 
+```{r}
+ testosterone_new %>%
+  lm(Pulse ~ Testosterone, data = .) %>%
+  tidy(conf.int = TRUE, conf.level = 0.95)
+```
 
 # Additional Information
 **A comment on anything of interest that occurred in doing the project. Were the data approximately what you expected or did some of the results surprise you? How did the sampling
