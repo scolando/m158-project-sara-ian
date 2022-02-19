@@ -111,12 +111,29 @@ ggplot(OurData, aes(x= Work, y = Pulse)) + geom_boxplot()
 
 ```{r}
  OurData %>%
-  lm(Pulse ~ Testosterone, data = .) %>%
-  ggplot(aes(x=Testosterone, y=Pulse)) + geom_point() + geom_smooth(method= "lm", se= FALSE) 
+  lm(Pulse ~ HHIncomeMid, data = .) %>%
+  ggplot(aes(x=HHIncomeMid, y=Pulse)) + 
+  geom_point() + 
+  geom_smooth(method= "lm", se= FALSE) 
+
+ OurData %>%
+  lm(Pulse ~ HHIncomeMid, data = .) %>%
+  ggplot(aes(x=HHIncomeMid, y=Pulse)) + 
+  geom_jitter(height = 0, width = 1000) + 
+  geom_smooth(method= "lm", se= FALSE) 
 ```
+
+
+```{r}
+ OurData %>%
+  lm(Pulse ~ as.factor(HHIncomeMid), data = .) %>%
+  tidy()
+```
+
 ```{r}
 testosterone_new <-OurData %>%
-  filter(Testosterone %in% (1:1400))
+  filter(Testosterone < 1400 ) %>%
+  filter(Gender == "male")
 ```
 
 ```{r}
@@ -137,6 +154,10 @@ testosterone_new <-OurData %>%
  testosterone_new %>%
   lm(Pulse ~ Testosterone, data = .) %>%
   tidy(conf.int = TRUE, conf.level = 0.95)
+
+ testosterone_new %>%
+  lm(Pulse ~ Testosterone, data = .) %>%
+  glance()
 ```
 
 # Additional Information
