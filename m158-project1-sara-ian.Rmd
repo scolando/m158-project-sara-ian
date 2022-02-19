@@ -1,6 +1,8 @@
 ---
-title: "m158-project1-sara-ian"
+title: "An Analysis of NHANES Data"
 output: pdf_document
+author: "Sara Colando and Ian Horsburgh"
+date: "22 February 2022"
 ---
 
 ```{r setup, include=FALSE}
@@ -18,31 +20,24 @@ library(nhanesA)
 library(skimr)
 ```
 
-# Reponse Variable
+# Introduction
 
-Our response variable is going to be pulse which is a quantitative variable. 
+  The National Health and Nutrition Exam Survey (NHANES) is administered by the National Center for Health Statistics, which is a branch of the Center for Disease Control in the United States. The target population of NHANES is people who live in the United States (of any age). Each year, NHANES randomly selects 7,000 residents in the US to participate in NHANES. The participation of those selected is confidential and voluntary. Once selected residents opt-in to NHANES, they undergo a personal interview and “standardized health examination”, where researchers can collect health information.
 
-# SLR
+  The NHANES data that we are analyzing has 10,000 observations and 75 variables which were collected from 2009-2012. The observational unit is a resident of the United States that is six months or older. For our project, we will only be using 10 variables – x quantitative and y categorical – that are listed below.
 
-pulse versus testosterone
+LIST HERE
 
-# Hypothesis
+  Our response variable is pulse – which is the 60 second pulse rate of a participant. 
+  
+  Given many of our variables (such as ___) were only collected for participants 18 and older, we will be limiting the scope of our population to adults (>18 years old) who live in the US.
 
-null: $\beta_1$ = 0 
-
-# NHANES Data Description:
-
-We are using data from the National Health and Nutrition Exam Survey (NHANES) database that was collected between 2009-2012 with adjusted weighing.
-
-The target population of NHANES is "the non-institutionalized civilian resident population of the United States". Therefore, the observational unit is a civilian resident of the United States (of any age).
-
-There are 75 total variables in NHANES data. However, only these 10 are relevant to our project:
 
 ### Age (quantitative)
 - Age in years at screening of study participant. All subjects 80 and older were recorded as 80.
 
 ### Testosterone (quantitative)
-- Testerone total (ng/dL), recorded for patients 6 and older. Note that no testosterone data for 2009-2010 was recorded.
+- Testosterone total (ng/dL), recorded for patients 6 and older. Note that no testosterone data for 2009-2010 was recorded.
 
 ### Physactivedays (numerical discrete)
 - Number of days in a typical week that partipant does moderate or vigorous-intensity activity. Reported in patients 12 years or older.
@@ -68,85 +63,54 @@ There are 75 total variables in NHANES data. However, only these 10 are relevant
 ### HHIncomeMid (numerical)
 - Total annual gross income for the household in US dollars, derived from the median of each partition. Variable was partitioned into blocks with the smallest one being (0,4999) and the largest block being (100,000 or more).
 
-### Filtering NHANES for to contain only our relevant variables:
-```{r}
+```{r echo=FALSE}
 OurData <- NHANES %>% select(Age, HHIncomeMid, Testosterone, PhysActiveDays, 
                                  Pulse, Gender, SleepTrouble, Depressed, 
-                                 Education, Work)
+                                 Education, Race1, Poverty, CompHrsDay)
 ```
 
 # Summary Statistics
 
-```{r}
+```{r echo=FALSE}
 skim(OurData) %>%
   dplyr::select(skim_variable, numeric.mean, numeric.sd, complete_rate, numeric.p50)
 ```
 
 # Graphs
-```{r, fig.width=3,fig.height=2}
+```{r, echo=FALSE, fig.width=3,fig.height=2}
 OurData %>%
   ggplot(aes(x = PhysActiveDays)) + 
   geom_histogram()  
 ```
 
-```{r, fig.width=3,fig.height=2}
+```{r, echo=FALSE, fig.width=3,fig.height=2}
 OurData %>%
-  ggplot(aes(x = Depressed)) + 
+  ggplot(aes(x = Race1)) + 
   geom_bar() 
 ```
 
-```{r, fig.width=3,fig.height=2}
+```{r, echo=FALSE, fig.width=3,fig.height=2}
 OurData %>%
   ggplot(aes(x = HHIncomeMid)) + 
   geom_histogram() 
 ```
 
-```{r fig.height=2, fig.width=2.5, fig.align='center'}
+```{r echo=FALSE, fig.height=2, fig.width=2.5, fig.align='center'}
 ggplot(OurData, aes(x= Testosterone, y = SleepTrouble)) + geom_boxplot()
 ```  
 
-```{r fig.height=2, fig.width=3, fig.align='center'}
-ggplot(OurData, aes(x= Work, y = Pulse)) + geom_boxplot()
-```  
 
-```{r}
+```{r echo=FALSE}
  OurData %>%
-  lm(Pulse ~ Work, data = .) %>%
-  ggplot(aes(x=Work, y=Pulse)) + 
-  geom_point() +
-  geom_smooth(method= "lm", se = FALSE)
-
- OurData %>%
-  lm(Pulse ~ Work, data = .) %>%
-  tidy()
-```
-
-
-```{r}
- OurData %>%
-  lm(Pulse ~ HHIncomeMid, data = .) %>%
-  ggplot(aes(x=HHIncomeMid, y=Pulse)) + 
+  lm(Pulse ~ Poverty, data = .) %>%
+  ggplot(aes(x= Poverty, y=Pulse)) + 
   geom_point() + 
   geom_smooth(method= "lm", se= FALSE) 
 
  OurData %>%
-  lm(Pulse ~ HHIncomeMid, data = .) %>%
-  ggplot(aes(x=HHIncomeMid, y=Pulse)) + 
-  geom_jitter(height = 0, width = 1000) + 
+  lm(Pulse ~ Poverty, data = .) %>%
+  ggplot(aes(x=Poverty, y=Pulse)) + 
   geom_smooth(method= "lm", se= FALSE) 
-```
-
-
-```{r}
- OurData %>%
-  lm(Pulse ~ SleepTrouble, data = .) %>%
-  ggplot(aes(x=SleepTrouble, y=Pulse)) + 
-  geom_point() + 
-  geom_smooth(method= "lm", se= FALSE) 
-
-OurData %>%
-  lm(Pulse ~ SleepTrouble, data = .) %>%
-  tidy()
 ```
 
 
@@ -156,17 +120,6 @@ OurData %>%
   tidy()
 ```
 
-```{r}
- NHANES %>%
-  lm(Pulse ~ CompHrsDay, data = .) %>%
-  ggplot(aes(x=CompHrsDay, y=Pulse)) + 
-  geom_point() + 
-  geom_smooth(method= "lm", se= FALSE) 
-
- NHANES %>%
-  lm(Pulse ~ CompHrsDay, data = .) %>%
-   tidy()
-```
 ```{r}
 Alcohol_new <- NHANES %>%
   filter(AlcoholDay <= 40)
@@ -220,18 +173,3 @@ testosterone_new <-OurData %>%
   lm(Pulse ~ Testosterone, data = .) %>%
   glance()
 ```
-
-# Additional Information
-**A comment on anything of interest that occurred in doing the project. Were the data approximately what you expected or did some of the results surprise you? How did the sampling
-go? Do you think you got a representative sample of your population?**
-
-**Because we will be doing hypothesis testing as the next step, you need to indicate what
-population your data describes. If it is a census, then maybe it is representative of an even
-larger population? (For example, a census of state information from 2015 might be somewhat
-representative of 2016? Is it?) Also, discuss the limitations of describing a larger population**
-
-The NHANES data represents a sample from the population of resident citizens of the US (who are 2 months or older). The specific NHANES data we are using was collection for 2009-2010 and 2011-2012. These results were voluntary and primarily collected via interview and physical examinations. There are some limitations of describing the larger population using NHANES data: 
-
-Firstly, many of our relevant variables were only collected within adults. Therefore, there are limitations to how we could apply our sample data to the population of all resident citizens of the US (who are 2 months or older) because we do not have certain variable data collected for non-adults. 
-
-Additionally, NHANES' study was voluntary and primarily self-reported or collected by healthcare professionals. Therefore, it is likely that people who feel sicker were overrepresented in our sample. Additionally, it is likely that people who have health insurance (or can afford wellness check-ups etc.) are also overrepresented in our sample. 
