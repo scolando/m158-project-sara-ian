@@ -59,20 +59,31 @@ skim(OurData) %>%
   dplyr::select(skim_variable, numeric.mean, numeric.sd, complete_rate, numeric.p50)
 ```
 
-# Graphs
+# Single Variable Distributions
 
-```{r, echo=FALSE, fig.width=3,fig.height=2}
+```{r,  fig.cap = "Distribution of Participant Race", echo=FALSE, fig.width=3,fig.height=2}
 OurData %>%
   ggplot(aes(x = Race1)) + 
   geom_bar() 
 ```
 
-```{r, echo=FALSE, fig.width=3,fig.height=2}
+```{r, fig.cap = "Dstribution of Participant Age", echo=FALSE, fig.width=3,fig.height=2}
 OurData %>%
   ggplot(aes(x = Age)) + 
   geom_histogram() 
 ```
 
+
+
+# Single Linear Regression
+
+### Test Hypothesis
+
+### LINE Assumptions
+
+### Confidence Intervals for Mean and Individual Response
+
+### Fit Assessment
 
 ```{r echo=FALSE}
  OurData %>%
@@ -150,9 +161,15 @@ testosterone_new <-OurData %>%
   lm(Pulse ~ Testosterone, data = .) %>%
   glance()
 ```
+# Conclusion
 
-# Oversampling and NHANES
+Comment on anything of interest that occurred in
+doing the project. Were the data approximately what you expected or did some of the results
+surprise you? What other questions would you like to ask about the data?)
 
-NHANES "over-samples persons 60 and older, African Americans, Asians, and Hispanics" to create more reliable and representative samples of the population.
+## Oversampling and NHANES
 
+NHANES "over-samples persons 60 and older, African Americans, Asians, and Hispanics" to create more reliable and representative samples of the population. According to NHANES, "the United States has experienced dramatic growth in the number of older people during this century, the aging population has major implications for health care needs, public policy, and research priorities. NCHS is working with public health agencies to increase the knowledge of the health status of older Americans." 
+
+Additonally, figure __ (histogram of participant race) aligns with the race distribution of the 2010 census data as a result of the over-sampling. While the census data itself may be biased from certain participant's being more likely to respond, it is clear that over-sampling "African Americans, Asians, and Hispanics" helps NHANES better match the racial demographics of their population.
 
