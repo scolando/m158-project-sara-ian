@@ -48,8 +48,8 @@ library(skimr)
 
 ```{r echo=FALSE}
 OurData <- NHANES %>% select(Age, HHIncomeMid, Testosterone, PhysActiveDays, 
-                                 Pulse, Gender, SleepTrouble, Depressed, 
-                                 Education, Race1, Poverty, CompHrsDay, AlcoholDay)
+                                 Pulse, Gender, Depressed, 
+                                 Education, Race1, Poverty, AlcoholDay)
 ```
 
 # Summary Statistics
@@ -60,11 +60,6 @@ skim(OurData) %>%
 ```
 
 # Graphs
-```{r, echo=FALSE, fig.width=3,fig.height=2}
-OurData %>%
-  ggplot(aes(x = PhysActiveDays)) + 
-  geom_histogram()  
-```
 
 ```{r, echo=FALSE, fig.width=3,fig.height=2}
 OurData %>%
@@ -74,13 +69,9 @@ OurData %>%
 
 ```{r, echo=FALSE, fig.width=3,fig.height=2}
 OurData %>%
-  ggplot(aes(x = HHIncomeMid)) + 
+  ggplot(aes(x = Age)) + 
   geom_histogram() 
 ```
-
-```{r echo=FALSE, fig.height=2, fig.width=2.5, fig.align='center'}
-ggplot(OurData, aes(x= Testosterone, y = SleepTrouble)) + geom_boxplot()
-```  
 
 
 ```{r echo=FALSE}
@@ -90,10 +81,13 @@ ggplot(OurData, aes(x= Testosterone, y = SleepTrouble)) + geom_boxplot()
   geom_point() + 
   geom_smooth(method= "lm", se= FALSE) 
 
+
  OurData %>%
   lm(Pulse ~ Poverty, data = .) %>%
-  ggplot(aes(x=Poverty, y=Pulse)) + 
-  geom_smooth(method= "lm", se= FALSE) 
+  augment() %>%
+  ggplot(aes(x = .fitted, y = .resid)) + 
+  geom_point() + 
+  geom_hline(yintercept = 0)
 ```
 
 
@@ -156,3 +150,9 @@ testosterone_new <-OurData %>%
   lm(Pulse ~ Testosterone, data = .) %>%
   glance()
 ```
+
+# Oversampling and NHANES
+
+NHANES "over-samples persons 60 and older, African Americans, Asians, and Hispanics" to create more reliable and representative samples of the population.
+
+
