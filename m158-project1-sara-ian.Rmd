@@ -111,6 +111,19 @@ ggplot(OurData, aes(x= Work, y = Pulse)) + geom_boxplot()
 
 ```{r}
  OurData %>%
+  lm(Pulse ~ Work, data = .) %>%
+  ggplot(aes(x=Work, y=Pulse)) + 
+  geom_point() +
+  geom_smooth(method= "lm", se = FALSE)
+
+ OurData %>%
+  lm(Pulse ~ Work, data = .) %>%
+  tidy()
+```
+
+
+```{r}
+ OurData %>%
   lm(Pulse ~ HHIncomeMid, data = .) %>%
   ggplot(aes(x=HHIncomeMid, y=Pulse)) + 
   geom_point() + 
@@ -126,8 +139,56 @@ ggplot(OurData, aes(x= Work, y = Pulse)) + geom_boxplot()
 
 ```{r}
  OurData %>%
+  lm(Pulse ~ SleepTrouble, data = .) %>%
+  ggplot(aes(x=SleepTrouble, y=Pulse)) + 
+  geom_point() + 
+  geom_smooth(method= "lm", se= FALSE) 
+
+OurData %>%
+  lm(Pulse ~ SleepTrouble, data = .) %>%
+  tidy()
+```
+
+
+```{r}
+ OurData %>%
   lm(Pulse ~ as.factor(HHIncomeMid), data = .) %>%
   tidy()
+```
+
+```{r}
+ NHANES %>%
+  lm(Pulse ~ CompHrsDay, data = .) %>%
+  ggplot(aes(x=CompHrsDay, y=Pulse)) + 
+  geom_point() + 
+  geom_smooth(method= "lm", se= FALSE) 
+
+ NHANES %>%
+  lm(Pulse ~ CompHrsDay, data = .) %>%
+   tidy()
+```
+```{r}
+Alcohol_new <- NHANES %>%
+  filter(AlcoholDay <= 40)
+```
+
+```{r}
+Alcohol_new %>%
+  lm(Pulse ~ AlcoholDay, data = .) %>%
+  ggplot(aes(x=AlcoholDay, y=Pulse)) + 
+  geom_point() + 
+  geom_smooth(method= "lm", se= FALSE) 
+
+Alcohol_new %>%
+  lm(Pulse ~ AlcoholDay, data = .) %>%
+  augment() %>%
+  ggplot(aes(x = .fitted, y = .resid)) + 
+  geom_point() + 
+  geom_hline(yintercept = 0)
+
+ NHANES %>%
+  lm(Pulse ~ AlcoholDay, data = .) %>%
+   tidy()
 ```
 
 ```{r}
