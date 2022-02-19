@@ -24,49 +24,32 @@ library(skimr)
 
   The National Health and Nutrition Exam Survey (NHANES) is administered by the National Center for Health Statistics, which is a branch of the Center for Disease Control in the United States. The target population of NHANES is people who live in the United States (of any age). Each year, NHANES randomly selects 7,000 residents in the US to participate in NHANES. The participation of those selected is confidential and voluntary. Once selected residents opt-in to NHANES, they undergo a personal interview and “standardized health examination”, where researchers can collect health information.
 
-  The NHANES data that we are analyzing has 10,000 observations and 75 variables which were collected from 2009-2012. The observational unit is a resident of the United States that is six months or older. For our project, we will only be using 10 variables – x quantitative and y categorical – that are listed below.
+  The NHANES data that we are analyzing has 10,000 observations and 75 variables which were collected from 2009-2012. The observational unit is a resident of the United States that is six months or older. For our project, we will only be using 10 variables – 7 quantitative and 4 categorical – that are listed below.
 
-LIST HERE
+##### Quantitative
+1. Pulse *(60 second pulse rate)*
+2. Testosterone *(recorded in ng/dL for patients 6 and older; no data for 2009-2010 was recorded)*
+3. Poverty *(A ratio of family income to poverty guidelines. Smaller numbers indicate more poverty)*
+4. Age *(all subjective 80 or older are recorded as 80)*
+5. Physactivedays *(Number of days in a typical week that partipant does moderate or vigorous-intensity activity. Reported in patients 12 years or older)*
+6. AlcoholDay *(Average number of drinks consumed on days that participant drank alcoholic beverages. Reported for participants aged 18 years or older)*
+7. HHIncomeMid *(Variable was partitioned into blocks with the smallest one being (0,4999) and the largest block being 100,000 or more, the median of each block was then used to estimate income)*
 
-  Our response variable is pulse – which is the 60 second pulse rate of a participant. 
+##### Categorical
+8. Gender *(sex of study particpant coded as "male" or "female")*
+9. Race1 *(Reported race of study participant: Mexican, Hispanic, White, Black, or Other)*
+10. Education *(Reported for ages 20 or older. Categories to choose from are "8thgrade", "9-11thgrade", "Highschool", "SomeCollege", or "CollegeGrad")*
+11. Depressed *(Self reported number of days where participant felt down, depressed or hopeless. Reported in patients 18 and olders with categories of "none", "several", "majority (more than half the days)", or "almostall")*
+
+  Our response variable will be pulse – which is the 60 second pulse rate of a participant. We will run pulse against a variety of explanatory variables to assess linear fit.
   
-  Given many of our variables (such as ___) were only collected for participants 18 and older, we will be limiting the scope of our population to adults (>18 years old) who live in the US.
+  Given many of our variables (such as depressed, alchohol, and education) were not collected for adolescents, we will be limiting the scope of our population to adults (>18 years old) who live in the US.
 
-
-### Age (quantitative)
-- Age in years at screening of study participant. All subjects 80 and older were recorded as 80.
-
-### Testosterone (quantitative)
-- Testosterone total (ng/dL), recorded for patients 6 and older. Note that no testosterone data for 2009-2010 was recorded.
-
-### Physactivedays (numerical discrete)
-- Number of days in a typical week that partipant does moderate or vigorous-intensity activity. Reported in patients 12 years or older.
-
-### Pulse (quantitative)
-- 60 second pulse rate
-
-### Gender (categorical)
-- Gender (sex) of study particpant coded as "male" or "female".
-
-### SleepTrouble (categorical)
-- Paritipant has told a doctor or other health professional that they had trouble sleeping. Reported in patients 16 and older. Either "yes" or "no".
-
-### Depressed (categorical)
-- Self reported number of days where participant felt down, depressed or hopeless. Reported in patients 18 and olders with categories of "none", "several", "majority (more than half the days)", or "almostall".
-
-### Education (categorical)
-- Educational level of study participant. Reported for ages 20 or older. Categories to choose from are "8thgrade", "9-11thgrade", "Highschool", "SomeCollege", or "CollegeGrad".
-
-### Work (categorical)
-- Categorizes whether study participant is "working", "not working" or no data was collected.
-
-### HHIncomeMid (numerical)
-- Total annual gross income for the household in US dollars, derived from the median of each partition. Variable was partitioned into blocks with the smallest one being (0,4999) and the largest block being (100,000 or more).
 
 ```{r echo=FALSE}
 OurData <- NHANES %>% select(Age, HHIncomeMid, Testosterone, PhysActiveDays, 
                                  Pulse, Gender, SleepTrouble, Depressed, 
-                                 Education, Race1, Poverty, CompHrsDay)
+                                 Education, Race1, Poverty, CompHrsDay, AlcoholDay)
 ```
 
 # Summary Statistics
