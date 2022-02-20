@@ -86,19 +86,23 @@ OurData %>%
 ### Fit Assessment
 
 ```{r echo=FALSE}
- OurData %>%
-  lm(Pulse ~ Poverty, data = .) %>%
-  ggplot(aes(x= Poverty, y=Pulse)) + 
+ NHANES %>%
+  lm(BPSysAve ~ Age, data = .) %>%
+  ggplot(aes(x= Age, y=BPSysAve)) + 
   geom_point() + 
   geom_smooth(method= "lm", se= FALSE) 
 
 
- OurData %>%
-  lm(Pulse ~ Poverty, data = .) %>%
+ NHANES %>%
+  lm(BPSysAve ~ Age, data = .) %>%
   augment() %>%
   ggplot(aes(x = .fitted, y = .resid)) + 
   geom_point() + 
   geom_hline(yintercept = 0)
+ 
+  NHANES %>%
+  lm(BPSysAve ~ Age, data = .) %>%
+    glance()
 ```
 
 
@@ -115,37 +119,41 @@ Alcohol_new <- NHANES %>%
 
 ```{r}
 Alcohol_new %>%
-  lm(Pulse ~ AlcoholDay, data = .) %>%
-  ggplot(aes(x=AlcoholDay, y=Pulse)) + 
+  lm(BPSysAve ~ AlcoholDay, data = .) %>%
+  ggplot(aes(x=AlcoholDay, y=BPSysAve)) + 
   geom_point() + 
   geom_smooth(method= "lm", se= FALSE) 
 
 Alcohol_new %>%
-  lm(Pulse ~ AlcoholDay, data = .) %>%
+  lm(BPSysAve ~ AlcoholDay, data = .) %>%
   augment() %>%
   ggplot(aes(x = .fitted, y = .resid)) + 
   geom_point() + 
   geom_hline(yintercept = 0)
 
  NHANES %>%
-  lm(Pulse ~ AlcoholDay, data = .) %>%
+  lm(BPSysAve ~ AlcoholDay, data = .) %>%
    tidy()
 ```
 
 ```{r}
-testosterone_new <-OurData %>%
+testosterone_new <-NHANES %>%
   filter(Testosterone < 1400 ) %>%
   filter(Gender == "male")
 ```
 
 ```{r}
  testosterone_new %>%
-  lm(Pulse ~ Testosterone, data = .) %>%
-  ggplot(aes(x=Testosterone, y=Pulse)) + geom_point() + geom_smooth(method= "lm", se= FALSE) 
+  lm(BPSysAve ~ Testosterone, data = .) %>%
+  ggplot(aes(x=Testosterone, y=BPSysAve)) + geom_point() + geom_smooth(method= "lm", se= FALSE) 
+
+testosterone_new %>%
+  lm(BPSysAve ~ Testosterone, data = .) %>%
+  glance()
 ```
 ```{r}
  testosterone_new %>%
-  lm(Pulse ~ Testosterone, data = .) %>%
+  lm(BPSysAve ~ Testosterone, data = .) %>%
   augment() %>%
   ggplot(aes(x = .fitted, y = .resid)) + 
   geom_point() + 
